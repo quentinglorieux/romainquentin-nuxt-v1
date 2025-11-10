@@ -55,7 +55,7 @@ export default defineNuxtConfig({
     public: {
       openalexAuthorId: 'https://openalex.org/A5035809054', // ⚠️ "A" majuscule
       openalexBase: 'https://api.openalex.org',
-      openalexPerPage: 12,
+      openalexPerPage: 100,
       openalexMailto: 'quentin.glorieux@lkb.upmc.fr'        // pour mailto et UA
     }
   },

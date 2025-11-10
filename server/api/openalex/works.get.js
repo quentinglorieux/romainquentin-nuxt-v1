@@ -3,26 +3,33 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const q = getQuery(event)
 
+  // Pagination
   const page = Math.max(1, parseInt(String(q.page ?? '1'), 10) || 1)
   const perPage = Math.min(
     50,
-    parseInt(String(q.perPage ?? (config.public.openalexPerPage || '12')), 10) || 12
+    parseInt(String(q.perPage ?? (config.public.openalexPerPage || '50')), 10) || 12
   )
 
-  // Author ID can be 'A123...' or a full URI. Normalize to full URI.
-  const rawAuthorId = config.public.openalexAuthorId || 'https://openalex.org/A5035809054'
-  const authorId = rawAuthorId.startsWith('http')
-    ? rawAuthorId
-    : `https://openalex.org/${rawAuthorId}`
+  // Author ID (accepts "A503..." or full URI)
+  const rawAuthorId = config.public.openalexAuthorId || 'https://openalex.org/A5024990264'
+  const authorId = rawAuthorId.startsWith('http') ? rawAuthorId : `https://openalex.org/${rawAuthorId}`
 
   const base = config.public.openalexBase || 'https://api.openalex.org'
   const mailto = config.public.openalexMailto || 'quentin.glorieux@lkb.upmc.fr'
 
-  // Keep payload small
+  // Valid select fields only
   const fields = [
-    'id', 'doi', 'display_name', 'publication_year',
-    'host_venue', 'authorships', 'open_access',
-    'primary_location', 'biblio', 'cited_by_count'
+    'id',
+    'doi',
+    'display_name',
+    'publication_year',
+    'authorships',
+    'open_access',
+    'primary_location',
+    'best_oa_location',
+    'sources',
+    'biblio',
+    'cited_by_count'
   ].join(',')
 
   const url = new URL(`${base}/works`)
@@ -33,19 +40,62 @@ export default defineEventHandler(async (event) => {
   url.searchParams.set('select', fields)
   url.searchParams.set('mailto', mailto)
 
-  const res = await $fetch(url.toString(), {
-    headers: {
-      Accept: 'application/json',
-      // OpenAlex requires clear identification
-      'User-Agent': `romainquentin-nuxt (mailto:${mailto})`
+  let res
+  try {
+    res = await $fetch(url.toString(), {
+      headers: {
+        Accept: 'application/json',
+        'User-Agent': `MEL-website/1.0 (+mailto:${mailto})`
+      }
+    })
+  } catch (err) {
+    setResponseStatus(event, 502)
+    return {
+      error: true,
+      message: 'Failed to fetch from OpenAlex',
+      detail: (err && err.data) || String(err)
     }
-  })
+  }
 
   const items = (res?.results || []).map((w) => {
-    const venue = w.host_venue?.display_name || w.primary_location?.source?.display_name || ''
-    const oaPdf = w.open_access?.is_oa
-      ? (w.open_access?.oa_url || w.primary_location?.pdf_url || null)
-      : null
+    // —— Robust venue fallback chain:
+    // 1) primary_location.source.display_name
+    // 2) primary_location.raw_source_name
+    // 3) first sources[].display_name
+    // 4) empty string
+    const venue =
+      w?.primary_location?.source?.display_name?.trim?.() ||
+      w?.primary_location?.raw_source_name?.trim?.() || 
+      (Array.isArray(w?.sources) && w.sources[0]?.display_name?.trim?.()) ||
+      ''
+
+    // OA URL: prefer best_oa_location, else open_access / primary_location
+    const bestOaUrl =
+      w?.best_oa_location?.url ||
+      w?.open_access?.oa_url ||
+      w?.primary_location?.pdf_url ||
+      null
+
+    const bestLanding =
+      w?.primary_location?.landing_page_url ||
+      w?.best_oa_location?.landing_page_url ||
+      w?.doi ||
+      w?.id
+
+    // Normalize authors + ORCID (bare ID if URL provided)
+    const authors = (w.authorships || []).map((a) => {
+      const rawOrcid = a?.author?.orcid || a?.orcid || null
+      const orcid = rawOrcid
+        ? String(rawOrcid).replace(/^https?:\/\/orcid\.org\//i, '').trim()
+        : null
+
+      return {
+        name: a?.author?.display_name || a?.institutions?.[0]?.display_name || 'Author',
+        authorId: a?.author?.id || null,
+        orcid,
+        isCorresponding: !!a?.is_corresponding
+      }
+    })
 
     return {
       id: w.id,
@@ -54,16 +104,13 @@ export default defineEventHandler(async (event) => {
       year: w.publication_year || null,
       venue,
       citedBy: w.cited_by_count ?? 0,
-      pages: (w.biblio?.first_page && w.biblio?.last_page)
-        ? `${w.biblio.first_page}–${w.biblio.last_page}`
-        : null,
-      oaPdf,
-      bestUrl: oaPdf || w.primary_location?.landing_page_url || w.doi || w.id,
-      authors: (w.authorships || []).map((a) => ({
-        name: a.author?.display_name || a.institutions?.[0]?.display_name || 'Author',
-        authorId: a.author?.id || null,
-        isCorresponding: !!a.is_corresponding
-      }))
+      pages:
+        w?.biblio?.first_page && w?.biblio?.last_page
+          ? `${w.biblio.first_page}–${w.biblio.last_page}`
+          : null,
+      oaPdf: bestOaUrl,
+      bestUrl: bestOaUrl || bestLanding,
+      authors
     }
   })
 
