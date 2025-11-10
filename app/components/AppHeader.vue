@@ -14,7 +14,7 @@ const open = ref(false) // mobile only
       <!-- Left: Logo -->
       <div class="flex items-center">
         <NuxtLink to="/" class="flex items-center gap-2">
-          <img :src="logo" alt="Logo" class="h-8 w-8" />
+          <img :src="logo" alt="Logo" class="w-16" />
           <span class="sr-only">Home</span>
         </NuxtLink>
       </div>
@@ -22,7 +22,7 @@ const open = ref(false) // mobile only
       <!-- Center: Nav (desktop) -->
       <nav class="hidden lg:block">
         <ul class="flex items-center gap-8 text-[12px] tracking-[0.25em] uppercase">
-          <li v-for="l in links" :key="l?.label" class="relative">
+          <li v-for="l in links" :key="l?.label" class="relative group">
             <NuxtLink
               v-if="!l?.external"
               :to="l?.to"
@@ -51,7 +51,7 @@ const open = ref(false) // mobile only
 
       <!-- Right: actions (desktop) -->
       <div class="hidden lg:flex items-center justify-end gap-3">
-        <UColorModeButton />
+      <!--  <UColorModeButton />-->
         
         <UButton
           v-if="cta"
@@ -68,46 +68,61 @@ const open = ref(false) // mobile only
       <!-- Mobile: burger -->
       <div class="flex lg:hidden items-center justify-end">
         <UButton icon="i-heroicons-bars-3" variant="ghost" @click="open = true" />
-        <USlideover v-model="open">
-          <div class="p-4 space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="font-semibold">Menu</span>
-              <UButton icon="i-heroicons-x-mark" variant="ghost" @click="open = false" />
+
+        <USlideover
+          v-model:open="open"
+          side="top"
+          :overlay="true"
+          :transition="true"
+          :ui="{
+            content: 'right-0 inset-y-0 mx-auto w-full max-w-sm',
+            body: 'p-0',
+            header: 'p-0',
+            footer: 'p-0'
+          }"
+        >
+          <template #content>
+            <div class="p-4 space-y-3 overflow-y-auto">
+              <div class="flex items-center justify-between">
+                <span class="ml-6">  </span><span class="font-semibold ">Menu</span>
+                <UButton icon="i-heroicons-x-mark" variant="ghost" @click="open = false" />
+              </div>
+
+              <ul class="space-y-1 text-center">
+                <li v-for="l in links" :key="l?.label">
+                  <NuxtLink
+                    v-if="!l?.external"
+                    :to="l?.to"
+                    class="block py-2 text-black/90"
+                    @click="open = false"
+                  >
+                    {{ l?.label }}
+                  </NuxtLink>
+                  <a
+                    v-else
+                    :href="l?.to"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block py-2 text-black/90"
+                    @click="open = false"
+                  >
+                    {{ l?.label }}
+                  </a>
+                </li>
+              </ul>
+
+              <UButton
+                v-if="cta"
+                block
+                variant="soft"
+                color="gray"
+                :to="cta.to"
+                @click="open = false"
+              >
+                {{ cta.label }}
+              </UButton>
             </div>
-            <ul class="space-y-1">
-              <li v-for="l in links" :key="l?.label">
-                <NuxtLink
-                  v-if="!l?.external"
-                  :to="l?.to"
-                  class="block py-2 text-black/90"
-                  @click="open = false"
-                >
-                  {{ l?.label }}
-                </NuxtLink>
-                <a
-                  v-else
-                  :href="l?.to"
-                  target="_blank"
-                  rel="noopener"
-                  class="block py-2 text-black/90"
-                  @click="open = false"
-                >
-                  {{ l?.label }}
-                </a>
-              </li>
-            </ul>
-            
-            <UButton
-              v-if="cta"
-              block
-              variant="soft"
-              color="gray"
-              :to="cta.to"
-              @click="open = false"
-            >
-              {{ cta.label }}
-            </UButton>
-          </div>
+          </template>
         </USlideover>
       </div>
     </UContainer>
