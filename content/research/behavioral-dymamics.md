@@ -4,10 +4,10 @@ description: "We study how the brain alternates between practice- and rest-relat
 image: "/img/research/learningdynamics.jpg"
 tags: ["learning", "neuroscience", "behavior"]
 publications:
-    - "doi:10.1016/j.cub.2020.05.077"
-    - "doi:10.1016/j.neuron.2017.08.009"
-    - "doi:10.1016/j.neuron.2016.12.031"
-sort: 1
+    - "10.1038/s41539-021-00093-9"
+members:
+    - "romain-quentin"
+    - "pauline-mouches"
 ---
 
 We are investigating the behavioral short-scale dynamics of learning. During a learning session, some types of learning are evidenced during short rest periods and others during the practice itself.
