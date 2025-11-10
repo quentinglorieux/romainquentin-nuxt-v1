@@ -12,5 +12,7 @@ useSeoMeta({ title: "MEL group — Home" });
 
     <section id="news"><NewsHome /></section>
 
+    <section id="jobs"><JoinUs /></section>
+
   </UContainer>
 </template>

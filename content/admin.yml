@@ -12,7 +12,7 @@ header:
     - { label: "Join Us", to: "/#jobs" }
 
 footer:
-  text: "© MEL Group"
+  text: ""
   left:
     title: "Centre de Recherche en Neurosciences de Lyon"
     lines:
