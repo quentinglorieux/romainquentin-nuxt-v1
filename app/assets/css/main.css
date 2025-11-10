@@ -1,17 +1,15 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@source "../../../content/**/*";
 
-@theme static {
-  --font-sans: 'Public Sans', sans-serif;
-  --font-serif: 'Instrument Serif', serif;
+@theme {
+  --container-8xl: 90rem;
 }
 
 :root {
-  --ui-container: var(--container-4xl);
+  --ui-container: var(--container-8xl);
 
-  ::selection {
+::selection {
     color: #282a30;
     background-color: #c8c8c8;
   }
@@ -20,6 +18,33 @@
 .dark {
   ::selection {
     color: #ffffff;
-    background-color: #474747;
+    background-color: #c8c8c8;
+  }
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Roboto', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Roboto Slab', Georgia, serif;
+    --font-menu: 'Montserrat', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #111;
+    
+  }
+
+  html {
+  scroll-behavior: smooth;
+}
+
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-sans);
+  }
+
+  nav, header, .menu, .navbar {
+    font-family: var(--font-menu);
   }
 }

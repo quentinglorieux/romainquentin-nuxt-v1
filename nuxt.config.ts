@@ -16,6 +16,19 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  app: {
+    head: {
+      link: [
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@400;500&family=Roboto+Slab:wght@400;600&display=swap",
+        },
+      ],
+    },
+  },
+
   compatibilityDate: '2024-11-01',
 
   nitro: {
@@ -34,5 +47,19 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+    devServer: {
+    port: 4444,
+  },
+    runtimeConfig: {
+    public: {
+      openalexAuthorId: 'https://openalex.org/A5035809054', // ⚠️ "A" majuscule
+      openalexBase: 'https://api.openalex.org',
+      openalexPerPage: 12,
+      openalexMailto: 'quentin.glorieux@lkb.upmc.fr'        // pour mailto et UA
+    }
+  },
+  routeRules: {
+    '/api/openalex/**': { cache: { maxAge: 60 } }
   }
 })
