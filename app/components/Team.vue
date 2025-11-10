@@ -2,17 +2,36 @@
 const { data: docs } = await useAsyncData('members:list', () =>
   queryCollection('members')
     .order('rank', 'ASC')    
-    .select('title', 'role', 'image', 'links', 'rank')
+    .select('title', 'role', 'image', 'links', 'rank', 'path')
     .all()
 )
 
+function slugify(v = '') {
+  return String(v)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')       // strip accents
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')          // non-alnum -> hyphen
+    .replace(/^-+|-+$/g, '')              // trim hyphens
+}
+
 const cards = computed(() =>
-  (docs.value ?? []).map(d => ({
-    name: d.title ?? d.meta?.title ?? 'Untitled',
-    role: d.role ?? '',
-    image: d.image ?? null,
-    links: d.links ?? {}
-  }))
+  (docs.value ?? []).map(d => {
+    const name = d.title ?? d.meta?.title ?? 'Untitled'
+    const explicitPath = d.path || d._path || null
+    const explicitSlug = d.slug || d.meta?.slug || null
+    const fallbackSlug = explicitSlug || slugify(name)
+    const path = explicitPath || (fallbackSlug ? `/members/${fallbackSlug}` : null)
+
+    return {
+      name,
+      role: d.role ?? d.meta?.role ?? '',
+      image: d.image ?? d.meta?.image ?? null,
+      links: d.links ?? d.meta?.links ?? {},
+      path
+    }
+  })
 )
 </script>
 
@@ -28,7 +47,7 @@ const cards = computed(() =>
       <div class="grid gap-12 md:gap-14 lg:gap-16 sm:grid-cols-2 lg:grid-cols-4">
         <article
           v-for="m in cards"
-          :key="m.path"
+          :key="m.path || m.name"
           class="flex flex-col items-center text-center"
         >
           <!-- Photo -->
@@ -42,11 +61,12 @@ const cards = computed(() =>
             <div v-else class="w-full h-full bg-gray-200" />
             <!-- Liens sociaux -->
             <div class="absolute left-4 bottom-4 flex gap-3">
-              <NuxtLink
+              <a
                 v-for="(url, key) in m.links"
                 :key="key"
-                :to="url"
+                :href="url"
                 target="_blank"
+                rel="noopener"
                 class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/90 hover:bg-amber-600 hover:scale-110 text-white text-xs font-bold"
                 :aria-label="key"
               >
@@ -56,7 +76,7 @@ const cards = computed(() =>
                    key === 'linkedin' ? 'in' :
                    key === 'website' ? '🌐' :
                    key === 'email' ? '✉' : key[0].toUpperCase() }}
-              </NuxtLink>
+              </a>
             </div>
           </div>
 
@@ -66,13 +86,15 @@ const cards = computed(() =>
 
           <!-- Read more -->
           <UButton
+            v-if="m.path"
             variant="link"
             color="warning"
             class="mt-4 uppercase underline text-[14px] tracking-wide"
-            :to="`/members/${m.name.replace(' ', '-').toLowerCase()}`"
+            :to="m.path"
           >
             Read more
           </UButton>
+          <span v-else class="mt-4 text-xs text-gray-400">No page</span>
         </article>
       </div>
     </UContainer>
