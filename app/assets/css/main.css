@@ -24,8 +24,8 @@
 
 @layer base {
   :root {
-    --font-sans: 'Roboto', system-ui, -apple-system, sans-serif;
-    --font-serif: 'Roboto Slab', Georgia, serif;
+    --font-sans: 'Roboto',  sans-serif;
+    --font-serif: 'Roboto Slab',  serif;
     --font-menu: 'Montserrat', sans-serif;
   }
 
