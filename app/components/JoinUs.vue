@@ -73,15 +73,15 @@ const spontaneousMail = computed(() => {
       <!-- Si on a des offres -->
       <div v-if="openJobs.length" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <UCard v-for="(job, i) in openJobs" :key="i" class="flex flex-col">
-        
-          <NuxtLink :to="job.path" class="flex-1 flex flex-col">
+
+          <NuxtLink :to="{ path: job.path, hash: '#top' }" class="flex-1 flex flex-col">
             <h3 class="text-lg font-semibold">{{ job.title }}</h3>
 
             <div class="mt-2 flex flex-wrap gap-2 text-gray-700">
-              <UBadge v-if="job.location" color="warning" variant="subtle">
+              <UBadge v-if="job.location" color="warning" variant="soft">
                 {{ job.location }}
               </UBadge>
-              <UBadge v-if="job.contract" color="warning" variant="subtle">
+              <UBadge v-if="job.contract" color="warning" variant="soft">
                 {{ job.contract }}
               </UBadge>
             </div>
@@ -98,7 +98,7 @@ const spontaneousMail = computed(() => {
 
           <div class="mt-4 flex items-center gap-3">
             <UButton
-              :to="job.path"
+              :to="{ path: job.path, hash: '#top' }"
               color="warning"
               icon="i-lucide-plus-circle"
             >

@@ -32,7 +32,8 @@ const cards = computed(() =>
           :key="i"
           class="group relative w-[260px] sm:w-[300px] md:w-[340px] lg:w-[360px] aspect-square overflow-hidden"
         >
-          <NuxtLink :to="item.to" class="block w-full h-full">
+ 
+          <NuxtLink :to="{ path: item.to, hash: '#top' }"  class="block w-full h-full">
             <NuxtImg
               v-if="item.image"
               :src="item.image"

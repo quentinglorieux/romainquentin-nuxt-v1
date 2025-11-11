@@ -34,7 +34,7 @@ const error = useError()
 
 <template>
   <div>
-    <AppHeader :logo="logo" :links="navLinks" />
+    <AppHeader :logo="logo" :links="navLinks"  />
 
     <UMain>
         <UPage>

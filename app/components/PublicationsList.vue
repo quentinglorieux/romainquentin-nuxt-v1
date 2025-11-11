@@ -331,6 +331,14 @@ const numbered = computed(() => {
         >
           DOI
         </UButton>
+        <UButton
+          size="xs"
+          variant="ghost"
+          color="neutral"
+          icon="i-lucide-x"
+          aria-label="Close"
+          @click.stop="showPanel = false"
+        />
       </div>
     </div>
 

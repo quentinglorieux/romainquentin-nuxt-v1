@@ -101,7 +101,7 @@ const team = computed(() => Array.isArray(members?.value) ? members.value : [])
 </script>
 
 <template>
-  <section class="py-10 md:py-14 bg-white">
+  <section class="py-10 md:py-14 bg-white scroll-mt-24" id="top">
     <UContainer>
       <!-- Loading -->
       <div v-if="pending" class="space-y-3">
@@ -219,7 +219,7 @@ const team = computed(() => Array.isArray(members?.value) ? members.value : [])
               <UAlert
                 v-else-if="memError"
                 color="amber"
-                variant="subtle"
+                variant="soft"
                 title="Impossible de charger les membres"
                 :description="String(memError)"
               />

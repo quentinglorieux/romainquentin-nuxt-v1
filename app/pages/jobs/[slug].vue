@@ -40,7 +40,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <section class="py-10 md:py-14">
+  <section class="py-10 md:py-14 scroll-mt-24" id="top">
     <UContainer>
       <!-- Loading -->
       <div v-if="pending" class="grid md:grid-cols-3 gap-8">
@@ -101,7 +101,7 @@ useSeoMeta({
 
           <!-- Keywords -->
           <div v-if="keywords.length" class="mt-3 flex flex-wrap gap-2">
-            <UBadge v-for="k in keywords" :key="k"  color="neutral" variant="subtle">
+            <UBadge v-for="k in keywords" :key="k"  color="neutral" variant="soft">
               {{ k }}
             </UBadge>
           </div>
