@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@vueuse/nuxt',
     'nuxt-og-image',
-    'motion-v/nuxt'
+    'motion-v/nuxt',
+    'nuxt-studio'
   ],
 
   devtools: {
@@ -60,6 +61,20 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/api/openalex/**': { cache: { maxAge: 60 } }
+    '/api/openalex/**': { cache: { maxAge: 60 } },
+    '/_studio/**': { ssr: false }
+  },
+  studio: {
+    // Studio admin route (default: '/_studio')
+    route: '/_studio',
+    
+    // GitHub repository configuration (owner and repo are required)
+    repository: {
+      provider: 'github', // only GitHub is currently supported
+      owner: 'quentinglorieux', // your GitHub username or organization
+      repo: 'romainquentin-nuxt-v1', // your repository name
+      branch: 'main', // the branch to commit to (default: main)
+      rootDir: '' // optional: if your Nuxt app is in a subdirectory (default: '')
+    },
   }
 })
