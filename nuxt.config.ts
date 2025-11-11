@@ -62,7 +62,6 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/api/openalex/**': { cache: { maxAge: 60 } },
-    '/_studio/**': { ssr: false }
   },
   studio: {
     // Studio admin route (default: '/_studio')
@@ -76,5 +75,6 @@ export default defineNuxtConfig({
       branch: 'main', // the branch to commit to (default: main)
       rootDir: '' // optional: if your Nuxt app is in a subdirectory (default: '')
     },
+
   }
 })
