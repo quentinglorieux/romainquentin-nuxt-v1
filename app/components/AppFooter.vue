@@ -48,5 +48,5 @@ const footer = computed(() => admin.value?.footer ?? {})
 <style scoped>
 footer {
   font-family: 'Roboto', sans-serif;
-}
+} 
 </style>
