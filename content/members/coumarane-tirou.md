@@ -6,8 +6,8 @@ image: /img/members/coumarane.jpg
 links:
   orcid: https://orcid.org/0000-0000-0000-0000
   scholar: https://scholar.google.com/citations?user=XXXXX
-  twitter: https://twitter.com/romainq
-  linkedin: https://www.linkedin.com/in/romain-quentin
+  twitter: https://twitter.com/x
+  linkedin: https://www.linkedin.com/in/x
 rank: 4
 role: PhD Student
 seo:

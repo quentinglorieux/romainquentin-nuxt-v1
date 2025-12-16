@@ -8,7 +8,7 @@ const { data: docs } = await useAsyncData('research:list', () =>
 const cards = computed(() =>
   (docs.value ?? []).map(d => ({
     title: d.title ?? 'Untitled',
-    image: d.meta?.image ?? null,
+    image: d.image ?? null,
     // Prefer explicit slug if you have it, fallback to Nuxt Content path
     to: d.path || ""
   }))
@@ -32,7 +32,7 @@ const cards = computed(() =>
           :key="i"
           class="group relative w-[260px] sm:w-[300px] md:w-[340px] lg:w-[360px] aspect-square overflow-hidden"
         >
- 
+
           <NuxtLink :to="{ path: item.to, hash: '#top' }"  class="block w-full h-full">
             <NuxtImg
               v-if="item.image"

@@ -2,15 +2,16 @@
 title: Behavioral Dynamics of Learning
 description: We study how the brain alternates between practice- and rest-related modes of learning, revealing when different forms of learning occur.
 image: /img/research/learningdynamics.jpg
+members:
+  - romain-quentin
+  - pauline-mouches
+publications:
+  - 10.1038/s41539-021-00093-9
+  - ""
 tags:
   - learning
   - neuroscience
   - behavior
-publications:
-  - 10.1038/s41539-021-00093-9
-members:
-  - romain-quentin
-  - pauline-mouches
 ---
 
 We are investigating the behavioral short-scale dynamics of learning.

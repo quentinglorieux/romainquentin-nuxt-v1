@@ -3,7 +3,7 @@ title: "Learning from errors"
 image: "/img/research/learningerror.jpg" 
 description: "Using behavioral computational models and machine-learning decoding of brain activity, we aim to identify the neural representation of error-sensitivity during learning through trial and error."
 tags: ["learning", "neuroscience", "behavior"]
-publications:
+publications: []
 members:
     - "romain-quentin"
     - "coumarane-tirou"

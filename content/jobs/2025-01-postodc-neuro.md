@@ -1,23 +1,23 @@
 ---
 title: Postdoc Position in Computational Neuroscience
-description: We are investigating the short-scale dynamics of learning. During a learning session, some forms of learning emerge during practice while others consolidate during brief rest periods. Your mission will be to model, analyze, and interpret these dynamics using MEG/EEG and behavioral data, in collaboration with our Lyon partners.
-location: Lyon
-deadline: 2025-12-31
+application_url: mailto:romain.quentin@sorbonne-universite.fr?subject=Postdoc%20Computational%20Neuroscience
+contact_email: romain.quentin@inserm.fr
+contact_name: Romain Quentin
 contract: Postdoctoral researcher (full-time)
-team: Cognitive & Computational Neuroscience
-lab: CRNL, INSERM U1028, Lyon Neuroscience Research Center
-start: 2025-09-01
+deadline: 2025-12-31
+description: We are investigating the short-scale dynamics of learning. During a learning session, some forms of learning emerge during practice while others consolidate during brief rest periods. Your mission will be to model, analyze, and interpret these dynamics using MEG/EEG and behavioral data, in collaboration with our Lyon partners.
 duration: 24 months (renewable)
-salary: According to experience, ~€2,500–€3,200 net/month + benefits
 keywords:
   - learning
   - MEG/EEG
   - computational modeling
   - machine learning
-contact_name: Romain Quentin
-contact_email: romain.quentin@inserm.fr
-application_url: mailto:romain.quentin@sorbonne-universite.fr?subject=Postdoc%20Computational%20Neuroscience
+lab: CRNL, INSERM U1028, Lyon Neuroscience Research Center
+location: Lyon
 pdf: /pdfs/2025-postdoc-computational-neuroscience.pdf
+salary: According to experience, ~€2,500–€3,200 net/month + benefits
+start: 2025-09-01
+team: Cognitive & Computational Neuroscience
 ---
 
 We are investigating the short-scale dynamics of learning. During a learning session, some forms of learning emerge during practice while others consolidate during brief rest periods. Your mission will be to **model**, **analyze**, and **interpret** these dynamics using MEG/EEG and behavioral data, in collaboration with our Lyon partners.

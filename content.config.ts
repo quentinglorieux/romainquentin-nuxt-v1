@@ -20,6 +20,13 @@ const footerColumnSchema = z.object({
   link: linkSchema.optional()
 }).passthrough()
 
+const seoSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional()
+}).passthrough()
+
+const stringListSchema = z.array(z.string()).default([])
+
 const adminSchema = z.object({
   lab: z.object({
     logo: media(z.string()).optional(),
@@ -86,11 +93,6 @@ export default defineContentConfig({
       source: 'home.{yml,yaml,json}',
       schema: homeSchema
     }),
-    test: defineCollection({
-      type: 'data',
-      source: 'test.{yml,yaml,json}',
-      schema: z.any()
-    }),
 
     // Markdown collections
     members: defineCollection({
@@ -104,29 +106,63 @@ export default defineContentConfig({
         cv: z.string().optional(),
         image: media(z.string()).optional(),
         links: z.preprocess(coerceMemberLinks, memberLinksSchema).default({}),
-        seo: z.object({
-          title: z.string().optional(),
-          description: z.string().optional()
-        }).passthrough().optional()
+        seo: seoSchema.optional()
       })
     }),
-    jobs:    defineCollection({ type: 'page', source: 'jobs/**/*.md' }),
+    jobs: defineCollection({
+      type: 'page',
+      source: 'jobs/**/*.md',
+      schema: z.object({
+        title: z.string().optional(),
+        description: z.string().optional(),
+        location: z.string().optional(),
+        deadline: z.string().optional(),
+        contract: z.string().optional(),
+        team: z.string().optional(),
+        lab: z.string().optional(),
+        start: z.string().optional(),
+        duration: z.string().optional(),
+        salary: z.string().optional(),
+        keywords: stringListSchema.optional(),
+        contact_name: z.string().optional(),
+        contact_email: z.string().optional(),
+        application_url: z.string().optional(),
+        pdf: media(z.string()).optional(),
+        seo: seoSchema.optional()
+      }).passthrough()
+    }),
     news: defineCollection({
       type: 'page',
       source: 'news/**/*.md',
       schema: z.object({
-        date: z.string(),                // ISO string "2025-03-01"
-        category: z.string().optional(), // Publication | Grant | Talk | …
-        cover: z.string().optional(),    // image URL
+        title: z.string().optional(),
+        date: z.string().optional(), // ISO string "2025-03-01"
+        category: z.string().optional(),
         description: z.string().optional(),
-        tags: z.array(z.string()).optional(),
+        cover: media(z.string()).optional(),
+        tags: stringListSchema.optional(),
+        publications: stringListSchema.optional(),
+        members: stringListSchema.optional(),
         external: z.object({
           url: z.string(),
           label: z.string().optional()
-        }).optional()
-      })
+        }).passthrough().optional(),
+        seo: seoSchema.optional()
+      }).passthrough()
     }),
-    research:defineCollection({ type: 'page', source: 'research/**/*.md' }),
+    research: defineCollection({
+      type: 'page',
+      source: 'research/**/*.md',
+      schema: z.object({
+        title: z.string().optional(),
+        description: z.string().optional(),
+        image: media(z.string()).optional(),
+        tags: stringListSchema.optional(),
+        publications: stringListSchema.optional(),
+        members: stringListSchema.optional(),
+        seo: seoSchema.optional()
+      }).passthrough()
+    }),
 
     // YAML publications
     publications: defineCollection({

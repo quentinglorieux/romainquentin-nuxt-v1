@@ -12,6 +12,8 @@ const { data: job, pending, error } = await useAsyncData(
   () => queryCollection('jobs').path(targetPath).first()
 )
 
+const meta = computed(() => (job.value?.meta ?? job.value ?? {}))
+
 // Helpers
 function fmtDate(s) {
   if (!s) return null
@@ -21,21 +23,23 @@ function fmtDate(s) {
 }
 
 const keywords = computed(() => {
-  const k = job.value?.keywords ?? job.value?.meta?.keywords ?? []
+  const k = job.value?.keywords ?? meta.value?.keywords ?? []
   return Array.isArray(k) ? k : []
 })
 
 const applyHref = computed(() => {
-  const url = job.value?.application_url
-  const email = job.value?.contact_email
+  const url = job.value?.application_url ?? meta.value?.application_url
+  const email = job.value?.contact_email ?? meta.value?.contact_email
   if (url) return url
   if (email) return `mailto:${email}?subject=${encodeURIComponent(`Application: ${job.value?.title ?? ''}`)}`
   return null
 })
 
+const pdfHref = computed(() => job.value?.pdf ?? meta.value?.pdf ?? null)
+
 useSeoMeta({
   title: () => job.value?.title ? `${job.value.title} — Join Us` : 'Join Us',
-  description: () => job.value?.description ?? `Open position: ${job.value?.title ?? ''}`,
+  description: () => job.value?.description ?? meta.value?.description ?? `Open position: ${job.value?.title ?? ''}`,
 })
 </script>
 
@@ -85,18 +89,18 @@ useSeoMeta({
 
           <!-- Badges -->
           <div class="mt-3 flex flex-wrap gap-2 ">
-            <UBadge v-if="job.meta.location" color="warning" variant="soft" size="lg">{{ job.meta.location }}</UBadge>
-            <UBadge v-if="job.meta.contract" color="warning" variant="soft" size="lg">{{ job.meta.contract }}</UBadge>
-            <UBadge v-if="job.meta.team" color="warning" variant="soft" size="lg">{{ job.meta.team }}</UBadge>
-            <UBadge v-if="job.meta.lab" color="warning" variant="soft" size="lg">{{ job.meta.lab }}</UBadge>
+            <UBadge v-if="job.location" color="warning" variant="soft" size="lg">{{ job.location }}</UBadge>
+            <UBadge v-if="job.contract" color="warning" variant="soft" size="lg">{{ job.contract }}</UBadge>
+            <UBadge v-if="job.team" color="warning" variant="soft" size="lg">{{ job.team }}</UBadge>
+            <UBadge v-if="job.lab" color="warning" variant="soft" size="lg">{{ job.lab }}</UBadge>
           </div>
 
           <!-- Quick meta -->
           <p class="mt-2 text-sm flex flex-col gap-1 text-gray-600 space-x-3">
-            <span v-if="job.meta.start"><strong>Start:</strong> {{ job.meta.start }}</span>
-            <span v-if="job.meta.duration"><strong>Duration:</strong> {{ job.meta.duration }}</span>
-            <span v-if="job.meta.salary"><strong>Salary:</strong> {{ job.meta.salary }}</span>
-            <span v-if="job.meta.deadline"><strong>Deadline:</strong> {{ fmtDate(job.meta.deadline) }}</span>
+            <span v-if="job.start"><strong>Start:</strong> {{ job.start }}</span>
+            <span v-if="job.duration"><strong>Duration:</strong> {{ job.duration }}</span>
+            <span v-if="job.salary"><strong>Salary:</strong> {{ job.salary }}</span>
+            <span v-if="job.deadline"><strong>Deadline:</strong> {{ fmtDate(job.deadline) }}</span>
           </p>
 
           <!-- Keywords -->
@@ -124,8 +128,8 @@ useSeoMeta({
               Apply
             </UButton>
             <UButton
-              v-if="job.meta.pdf"
-              :to="job.meta.pdf"
+              v-if="pdfHref"
+              :to="pdfHref"
               target="_blank"
               variant="outline"
               color="warning"
@@ -135,7 +139,8 @@ useSeoMeta({
             </UButton>
           </div>
           <UButton
-                  :to="job.meta.application_url"
+                  v-if="applyHref"
+                  :to="applyHref"
                   target="_blank"
                   color="warning"
                   icon="i-lucide-mail"
@@ -150,21 +155,22 @@ useSeoMeta({
             <div class="space-y-3">
               <h2 class="text-lg font-semibold">Position details</h2>
               <ul class="text-sm text-gray-700 space-y-1">
-                <li v-if="job.meta.location"><strong>Location:</strong> {{ job.meta.location }}</li>
-                <li v-if="job.meta.contract"><strong>Contract:</strong> {{ job.meta.contract }}</li>
-                <li v-if="job.meta.start"><strong>Start:</strong> {{ job.meta.start }}</li>
-                <li v-if="job.meta.duration"><strong>Duration:</strong> {{ job.meta.duration }}</li>
-                <li v-if="job.meta.salary"><strong>Salary:</strong> {{ job.meta.salary }}</li>
-                <li v-if="job.meta.deadline"><strong>Deadline:</strong> {{ fmtDate(job.meta.deadline) }}</li>
-                <li v-if="job.meta.team"><strong>Team:</strong> {{ job.meta.team }}</li>
-                <li v-if="job.meta.lab"><strong>Lab:</strong> {{ job.meta.lab }}</li>
-                <li v-if="job.meta.contact_name"><strong>Contact:</strong> {{ job.meta.contact_name }}</li>
-                <li v-if="job.meta.contact_email"><strong>Email:</strong> {{ job.meta.contact_email }}</li>
+                <li v-if="job.location"><strong>Location:</strong> {{ job.location }}</li>
+                <li v-if="job.contract"><strong>Contract:</strong> {{ job.contract }}</li>
+                <li v-if="job.start"><strong>Start:</strong> {{ job.start }}</li>
+                <li v-if="job.duration"><strong>Duration:</strong> {{ job.duration }}</li>
+                <li v-if="job.salary"><strong>Salary:</strong> {{ job.salary }}</li>
+                <li v-if="job.deadline"><strong>Deadline:</strong> {{ fmtDate(job.deadline) }}</li>
+                <li v-if="job.team"><strong>Team:</strong> {{ job.team }}</li>
+                <li v-if="job.lab"><strong>Lab:</strong> {{ job.lab }}</li>
+                <li v-if="job.contact_name"><strong>Contact:</strong> {{ job.contact_name }}</li>
+                <li v-if="job.contact_email"><strong>Email:</strong> {{ job.contact_email }}</li>
               </ul>
 
               <div class="pt-2 flex flex-col gap-2">
                 <UButton
-                  :to="job.meta.application_url"
+                  v-if="applyHref"
+                  :to="applyHref"
                   target="_blank"
                   color="warning"
                   icon="i-lucide-mail"
@@ -172,8 +178,8 @@ useSeoMeta({
                   Apply now
                 </UButton>
                 <UButton
-                  v-if="job.pdf"
-                  :to="job.pdf"
+                  v-if="pdfHref"
+                  :to="pdfHref"
                   target="_blank"
                   variant="outline"
                   color="warning"
