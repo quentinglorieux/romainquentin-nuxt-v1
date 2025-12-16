@@ -12,7 +12,7 @@ role: PhD Student
 cv: ""
 ---
 
-As a Ph. D. student at the Lyon Neurosciences Research Center, my work consists in identifying brain mechanisms responsible for statistical learning.
+As a PhD student at the Lyon Neurosciences Research Center, my work consists in identifying brain mechanisms responsible for statistical learning.
 
 I use time-resolved neural signals recorded with magnetoencephalography (MEG) and machine-learning analyses to pursue this aim.
 
