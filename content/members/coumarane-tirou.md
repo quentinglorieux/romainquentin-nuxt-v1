@@ -1,6 +1,6 @@
 ---
 title: Coumarane Tirou
-description: As a Ph. D. student at the Lyon Neurosciences Research Center, my work consists in identifying brain mechanisms responsible for statistical learning. I use time-resolved neural signals recorded with magnetoencephalography (MEG) and machine-learning analyses to pursue this aim. My future career projects will be to conduct a post-doctoral fellowship abroad with the goal of ultimately working as a researcher in the field of computational and cognitive neurosciences.
+description: Ph. D. student at the Lyon Neurosciences Research Center
 image: /img/members/coumarane.jpg
 links:
   orcid: https://orcid.org/0000-0000-0000-0000
@@ -9,10 +9,13 @@ links:
   linkedin: https://www.linkedin.com/in/romain-quentin
 rank: 4
 role: PhD Student
+seo:
+  title: Coumarane Tirou
+  description: As a Ph. D. student at the Lyon Neurosciences Research Center, my work consists in identifying brain mechanisms responsible for statistical learning. I use time-resolved neural signals recorded with magnetoencephalography (MEG) and machine-learning analyses to pursue this aim. My future career projects will be to conduct a post-doctoral fellowship abroad with the goal of ultimately working as a researcher in the field of computational and cognitive neurosciences.
 cv: ""
 ---
 
-As a PhD student at the Lyon Neurosciences Research Center, my work consists in identifying brain mechanisms responsible for statistical learning.
+As a PhD. student at the Lyon Neurosciences Research Center, my work consists in identifying brain mechanisms responsible for statistical learning.
 
 I use time-resolved neural signals recorded with magnetoencephalography (MEG) and machine-learning analyses to pursue this aim.
 

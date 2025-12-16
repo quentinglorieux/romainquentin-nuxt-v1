@@ -1,39 +1,33 @@
-path: /admin
-body:
-  lab:
-    logo: /img/logo.png
-    name: CRNL
-  header:
-    nav:
-      - label: Home
-        to: /
-      - label: Research
-        to: /#research
-      - label: Our Team
-        to: /#team
-      - label: Publications
-        to: /publications
-      - label: News
-        to: /#news
-      - label: Join Us
-        to: /#jobs
-  footer:
-    text: ""
-    left:
-      title: Centre de Recherche en Neurosciences de Lyon
-      lines:
-        - Inserm U1028 / CNRS UMR5292
-        - CH Le Vinatier – Bâtiment 452
-        - 95 Bd Pinel
-        - 69675 BRON Cedex
-        - Francex
-      link:
-        label: ""
-        to: /
-    right:
-      title: Romain Quentin, Chargé de Recherche, INSERM
-      lines:
-        - EDUWELL
-        - 04 72 13 89 00
-        - romain.quentin@inserm.fr
-title: Admin
+lab:
+  logo: "/img/logo.png"
+  name: "CRNL"
+
+header:
+  nav:
+    - { label: "Home", to: "/" }
+    - { label: "Research", to: "/#research" }
+    - { label: "Our Team", to: "/#team" }
+    - { label: "Publications", to: "/publications" }
+    - { label: "News", to: "/#news" }
+    - { label: "Join Us", to: "/#jobs" }
+
+footer:
+  text: ""
+  left:
+    title: "Centre de Recherche en Neurosciences de Lyon"
+    lines:
+      - "Inserm U1028 / CNRS UMR5292"
+      - "CH Le Vinatier – Bâtiment 452"
+      - "95 Bd Pinel"
+      - "69675 BRON Cedex"
+      - "France"
+    link:
+      label: ""
+      to: "/"
+
+  right:
+    title: "Romain Quentin, Chargé de Recherche, INSERM"
+    lines:
+      - "EDUWELL"
+      - "04 72 13 89 00"
+      - "romain.quentin@inserm.fr"
