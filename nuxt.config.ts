@@ -59,18 +59,18 @@ export default defineNuxtConfig({
   routeRules: {
     '/api/openalex/**': { cache: { maxAge: 60 } },
   },
-  // studio: {
-  //   // Studio admin route (default: '/_studio')
-  //   route: '/_studio',
+  studio: {
+    // Studio admin route (default: '/_studio')
+    route: '/studio',
     
-  //   // GitHub repository configuration (owner and repo are required)
-  //   repository: {
-  //     provider: 'github', // only GitHub is currently supported
-  //     owner: 'quentinglorieux', // your GitHub username or organization
-  //     repo: 'romainquentin-nuxt-v1', // your repository name
-  //     branch: 'main', // the branch to commit to (default: main)
-  //     rootDir: '' // optional: if your Nuxt app is in a subdirectory (default: '')
-  //   },
+    // GitHub repository configuration (owner and repo are required)
+    repository: {
+      provider: 'github', // only GitHub is currently supported
+      owner: 'quentinglorieux', // your GitHub username or organization
+      repo: 'romainquentin-nuxt-v1', // your repository name
+      branch: 'main', // the branch to commit to (default: main)
+      rootDir: '' // optional: if your Nuxt app is in a subdirectory (default: '')
+    },
 
-  // }
+  }
 })
