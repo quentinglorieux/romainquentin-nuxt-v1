@@ -1,13 +1,16 @@
 hero:
   bg: "#b7c6b7"
-  image: "/img/background.png"
-  imageAlt: "brain"
-  pretitle: "WELCOME TO THE"
-  title: "Memory, Error and Learning (MEL) group."
-  description: >
-    We use behavioral experiments, brain electrophysiology and non-invasive brain
-    stimulation in humans to identify the neural computations of memory and learning.
+  image: /img/background.png
+  imageAlt: brain
+  pretitle: WELCOME TO THE
+  title: Memory, Error and Learning (MEL) group.
+  description: |
+    We use behavioral experiments, brain electrophysiology and non-invasive brain stimulation in humans to identify the neural computations of memory and learning.
   buttons:
-    - { label: "Our Research", to: "/#research" }
-    - { label: "Our Publications", to: "/publications" }
-    - { label: "Dr. Romain Quentin", to: "/members/romain-quentin" }
+    - label: Our Research
+      to: /#research
+    - label: Our Publications
+      to: /publications
+    - label: Dr. Romain Quentin
+      to: /members/romain-quentin
+title: Home

@@ -28,11 +28,39 @@ const cards = computed(() =>
       name,
       role: d.role ?? d.meta?.role ?? '',
       image: d.image ?? d.meta?.image ?? null,
-      links: d.links ?? d.meta?.links ?? {},
+      links: normalizeLinks(d.links ?? d.meta?.links ?? {}),
       path
     }
   })
 )
+
+function normalizeLinks(raw) {
+  // New format (Studio-friendly): [{ type, url }]
+  if (Array.isArray(raw)) {
+    const out = {}
+    for (const item of raw) {
+      if (!item) continue
+      const key = String(item.type ?? item.key ?? '').trim()
+      const url = String(item.url ?? item.to ?? '').trim()
+      if (!key || !url) continue
+      out[key] = url
+    }
+    return out
+  }
+
+  // Old format: { twitter: 'https://…', ... }
+  if (raw && typeof raw === 'object') {
+    const out = {}
+    for (const [key, value] of Object.entries(raw)) {
+      const url = String(value ?? '').trim()
+      if (!url) continue
+      out[key] = url
+    }
+    return out
+  }
+
+  return {}
+}
 </script>
 
 <template>

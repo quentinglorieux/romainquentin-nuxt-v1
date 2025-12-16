@@ -21,12 +21,29 @@ function has(val) {
 const links = computed(() => {
   const raw = (doc.value?.links ?? doc.value?.meta?.links ?? {}) || {}
   const safe = {}
-  for (const [k, v] of Object.entries(raw)) {
-    if (!v) continue
-    const s = String(v).trim()
-    if (!s) continue
-    safe[k] = s
+
+  // New Studio-friendly format: [{ type, url }]
+  if (Array.isArray(raw)) {
+    for (const item of raw) {
+      if (!item) continue
+      const k = String(item.type ?? item.key ?? '').trim()
+      const v = String(item.url ?? item.to ?? '').trim()
+      if (!k || !v) continue
+      safe[k] = v
+    }
+    return safe
   }
+
+  // Old format: { twitter: 'https://…', ... }
+  if (raw && typeof raw === 'object') {
+    for (const [k, v] of Object.entries(raw)) {
+      if (!v) continue
+      const s = String(v).trim()
+      if (!s) continue
+      safe[k] = s
+    }
+  }
+
   return safe
 })
 
@@ -137,7 +154,7 @@ function linkHref(key, url) {
         <!-- Right: portrait (sticky on desktop) -->
         <aside class="lg:col-span-4">
           <div class="lg:sticky lg:top-24">
-            <div class="aspect-[3/4] w-full overflow-hidden rounded-lg bg-gray-100">
+            <div class="aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-100">
               <NuxtImg
                 v-if="portrait"
                 :src="portrait"
